@@ -86,7 +86,9 @@ class Comment(db.Model):
 
 with app.app_context():
     db.create_all()
-
+    user3= User.query.get('3')
+    user3.name = "Jojo"
+    db.session.commit()
     all_users = User.query.all()
     for user in all_users:
         print(f'[ID:{user.id}, Name:{user.name}, Email: {user.email}]')
