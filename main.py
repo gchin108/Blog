@@ -14,22 +14,31 @@ import hashlib
 import urllib.parse
 import smtplib
 import os
-from time import sleep
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = secrets.token_hex(16)
+
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+print(os.getenv('blog_local'))
+if os.getenv('blog_local') == 'TRUE':
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+
+
 db = SQLAlchemy(app)
 
 # Flask Login
 login_manager = LoginManager()
 login_manager.init_app(app)
-app.secret_key = secrets.token_hex(16)
 
 
 # CONFIGURE TABLES
@@ -111,14 +120,14 @@ def register():
         all_users = User.query.all()
         print(all_users)
 
-        # if User.query.filter_by(email=register_form.email.data):
-        #     flash("This email already exist in our database. Please login")
-        #     return redirect(url_for('login'))
-        # else:
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user)
-        return redirect(url_for('home'))
+        if User.query.filter_by(email=register_form.email.data):
+            flash("This email already exist in our database. Please login")
+            return redirect(url_for('login'))
+        else:
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            return redirect(url_for('home'))
 
     return render_template("register.html", form=register_form, year=dt.today().year)
 

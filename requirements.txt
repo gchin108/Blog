@@ -23,3 +23,5 @@ WTForms
 email-validator
 setuptools
 pip
+python-dotenv
+psycopg2-binary==2.9.6
