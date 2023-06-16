@@ -201,6 +201,7 @@ def about():
 email2 = os.getenv('email2')
 key = os.getenv('email2_key')
 email1 = os.getenv('email1')
+print(f'email1={email1}, email2={email2}')
 
 
 def send_mail(message):
