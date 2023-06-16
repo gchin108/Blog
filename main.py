@@ -187,9 +187,9 @@ def about():
     return render_template("about.html", year=dt.today().year)
 
 
-email2 = os.environ.get('email2')
-key = os.environ.get('email2_key')
-email1 = os.environ.get('email1')
+email2 = os.getenv('email2')
+key = os.getenv('email2_key')
+email1 = os.getenv('email1')
 
 
 def send_mail(message):
