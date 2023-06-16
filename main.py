@@ -205,7 +205,7 @@ print(f'email1={email1}, email2={email2}')
 
 
 def send_mail(message):
-    with smtplib.SMTP("smtp.gmail.com") as connection:
+    with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
         connection.starttls()
         connection.login(user=email2, password=key)
         connection.sendmail(from_addr=email2, to_addrs=email1,
