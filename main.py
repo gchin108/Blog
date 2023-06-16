@@ -86,6 +86,9 @@ class Comment(db.Model):
 
 with app.app_context():
     db.create_all()
+    all_users = User.query.all()
+    for user in all_users:
+        print(f'[ID:{user.id}, Name:{user.name}, Email: {user.email}]')
 
 
 def get_gravatar_url(email):
