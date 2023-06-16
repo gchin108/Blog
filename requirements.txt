@@ -21,3 +21,5 @@ visitor
 Werkzeug
 WTForms
 email-validator
+setuptools
+pip
