@@ -122,7 +122,7 @@ def register():
         all_users = User.query.all()
         print(all_users)
 
-        if User.query.filter_by(email=register_form.email.data):
+        if User.query.filter_by(email=register_form.email.data).first():
             flash("This email already exist in our database. Please login")
             return redirect(url_for('login'))
         else:
