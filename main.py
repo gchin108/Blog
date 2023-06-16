@@ -86,6 +86,7 @@ class Comment(db.Model):
 
 with app.app_context():
     db.create_all()
+
     all_users = User.query.all()
     for user in all_users:
         print(f'[ID:{user.id}, Name:{user.name}, Email: {user.email}]')
@@ -100,7 +101,7 @@ def get_gravatar_url(email):
 def admin_only(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
-        if current_user.id != 1:
+        if current_user.id != 3:
             abort(403)  # Return a forbidden status code if the user is not the admin
         return func(*args, **kwargs)
 
