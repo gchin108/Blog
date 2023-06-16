@@ -24,4 +24,4 @@ email-validator
 setuptools
 pip
 python-dotenv
-psycopg2-binary
+psycopg2

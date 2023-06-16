@@ -16,6 +16,7 @@ import smtplib
 import os
 from dotenv import load_dotenv
 
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -32,6 +33,7 @@ if os.getenv('blog_local') == 'TRUE':
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+
 
 
 db = SQLAlchemy(app)
