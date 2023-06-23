@@ -15,7 +15,7 @@ import urllib.parse
 import smtplib
 import os
 from dotenv import load_dotenv
-
+from sqlalchemy import desc
 
 # Load environment variables from .env file
 load_dotenv()
@@ -33,8 +33,6 @@ if os.getenv('blog_local') == 'TRUE':
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-
-
 
 db = SQLAlchemy(app)
 
@@ -109,7 +107,7 @@ def admin_only(func):
 
 @app.route('/')
 def home():
-    posts = BlogPost.query.all()
+    posts = BlogPost.query.order_by(desc(BlogPost.date)).all()
     today = dt.today()
     return render_template("index.html", all_posts=posts, year=today.year)
 
